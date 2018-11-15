@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import Weather from "./Weather"
 /**
  * React Native의 component는 모바일 환경에 따라 Native하게 변화함
  * view component => 모바일 환경 따라 바뀜..
@@ -10,18 +10,20 @@ import { StyleSheet, Text, View } from 'react-native';
 export default class App extends Component {
   //state 작성
   state = {
-    isLoaded: false //데이터API 불러오면 True로 바뀜
+    isLoaded: true //데이터API 불러오면 True로 바뀜
   } //정보를 받았는지, 안받았는지 알려주는 indicator
 
 
   render() {
     const {isLoaded} = this.state;
     return (
-      <View style={styles.loading}>
-        {isLoaded ? null : ( 
-          <View>
+      <View style={styles.container}>
+        <StatusBar hidden={true}/>
+        {isLoaded ? (<Weather />) : ( 
+          <View style={styles.loading}> 
             <Text style={styles.loadingText}>Getting the fucking weather</Text>
-          </View>)
+          </View>
+          )
         }
         
       </View>
@@ -42,7 +44,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FDF6AA',
     justifyContent: 'flex-end',
-    paddingLeft: 25,
+    
   },
   loadingText:{
     fontSize: 30,
