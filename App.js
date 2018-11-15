@@ -10,6 +10,8 @@ import Weather from "./Weather"
  * navigator.geolocation.getCurrentPosition()
  */
 
+ const API_KEY = "b6884a2584190f6c6af49767e42fcd37";
+
 export default class App extends Component {
   //state 작성
   state = {
@@ -21,6 +23,7 @@ export default class App extends Component {
   componentDidMount(){
     navigator.geolocation.getCurrentPosition(
       position => {
+        this._getWeather(position.coords.latitude, position.coords.longitude)
         this.setState({
           isLoaded: true
         }); //위치정보를 받으면 isLoaded를 true로 바꾸고 날씨를 받아옴..
@@ -32,6 +35,14 @@ export default class App extends Component {
       }
     );
   }
+
+  _getWeather= (lat, long) => {
+    fetch('https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+long+'&APPID='+API_KEY)
+    .then(response => response.json())
+    .then(json => {console.log(json);});
+  }
+
+  //콘솔에서 위치 날짜
 
   render() {
     const {isLoaded, error} = this.state; //isLoaded, error 2개 받음
