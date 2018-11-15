@@ -5,14 +5,30 @@ import Weather from "./Weather"
  * React Native의 component는 모바일 환경에 따라 Native하게 변화함
  * view component => 모바일 환경 따라 바뀜..
  * 많은 component가 있다.. Doc에서 확인가능
+ * 
+ * Javascript의 navigator에서 위치정보 찾기 가능
+ * navigator.geolocation.getCurrentPosition()
  */
 
 export default class App extends Component {
   //state 작성
   state = {
-    isLoaded: true //데이터API 불러오면 True로 바뀜
+    isLoaded: false //데이터API 불러오면 True로 바뀜
   } //정보를 받았는지, 안받았는지 알려주는 indicator
 
+
+  componentDidMount(){
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        this.setState({
+          isLoaded: true
+        }); //위치정보를 받으면 isLoaded를 true로 바꾸고 날씨를 받아옴..
+      },
+      error => {
+        console.log(error); // 못받으면 에러..
+      }
+    );
+  }
 
   render() {
     const {isLoaded} = this.state;
@@ -48,7 +64,8 @@ const styles = StyleSheet.create({
   },
   loadingText:{
     fontSize: 30,
-    marginBottom: 100,
+    marginBottom: 60,
+    marginLeft: 30
 
 
   }
