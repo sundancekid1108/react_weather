@@ -13,7 +13,8 @@ import Weather from "./Weather"
 export default class App extends Component {
   //state 작성
   state = {
-    isLoaded: false //데이터API 불러오면 True로 바뀜
+    isLoaded: false, //데이터API 불러오면 True로 바뀜
+    error: null
   } //정보를 받았는지, 안받았는지 알려주는 indicator
 
 
@@ -25,19 +26,23 @@ export default class App extends Component {
         }); //위치정보를 받으면 isLoaded를 true로 바꾸고 날씨를 받아옴..
       },
       error => {
-        console.log(error); // 못받으면 에러..
+        this.setState({
+          error: 'something is wrong'
+        })  // 못받으면 에러..
       }
     );
   }
 
   render() {
-    const {isLoaded} = this.state;
+    const {isLoaded, error} = this.state; //isLoaded, error 2개 받음
     return (
       <View style={styles.container}>
         <StatusBar hidden={true}/>
         {isLoaded ? (<Weather />) : ( 
           <View style={styles.loading}> 
             <Text style={styles.loadingText}>Getting the fucking weather</Text>
+            {error ? <Text style= {styles.errorText}>{error}</Text> : null}
+            
           </View>
           )
         }
@@ -55,6 +60,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
     
   
+  },
+  errorText:{
+    color: "red",
+    backgroundColor: "transparent",
+    marginLeft: 30,
+    marginBottom: 40
+
   },
   loading: {
     flex: 1,
