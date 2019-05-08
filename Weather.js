@@ -1,10 +1,11 @@
-import React, {Component} from 'react';
-import { StyleSheet, Text, View, StatusBar } from 'react-native';
-import {LinearGradient} from "expo";
-import PropTypes from "prop-types";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import {Ionicons} from "@expo/vector-icons" // expo에 있는 IconLibrary.. fontawesome도 찾아보자
 
+import React, { Component } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { LinearGradient } from "expo";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import PropTypes from "prop-types";
+import {Ionicons} from "@expo/vector-icons" // expo에 있는 IconLibrary.. fontawesome도 찾아보자
+import App from "./App"
 
 const weatherCases = {
     Rain: {
@@ -14,7 +15,7 @@ const weatherCases = {
         icon: "weather-rainy" 
     },
     Clear: {
-        colors:["#FEF253  ", "#FF7300"],
+        colors:["#FEF253", "#FF7300"],
         title: "Sunny",
         subtitle: "Have a good day",
         icon: "weather-sunny" 
@@ -54,14 +55,24 @@ const weatherCases = {
         title: "Mist!",
         subtitle: "It's like you have no glasses on.",
         icon: "weather-fog"
-    }
+    },
+    Smoke: {
+        colors: ["#D7D2CC", "#304352"],
+        title: "Smoke",
+        subtitle: "Air pollution!!",
+        icon: "weather-fog"
+    },
 };
 
 
 
+
+
+
+
 function Weather({ weatherName, temp }) {
-    console.log("3. weatherName : " + weatherName);
-    
+    console.log("Weather.js weatherName : " + weatherName);
+    console.log("Weather.js temp : " + temp);
     return (
       <LinearGradient
         colors={weatherCases[weatherName].colors}
@@ -84,8 +95,9 @@ function Weather({ weatherName, temp }) {
       </LinearGradient>
     );
   }
-  
+
 Weather.propTypes = {
+
     temp: PropTypes.number.isRequired,
     weatherName: PropTypes.string.isRequired
 };
