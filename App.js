@@ -10,13 +10,15 @@ import Weather from "./Weather"
  * navigator.geolocation.getCurrentPosition()
  */
 
- const API_KEY = "b6884a2584190f6c6af49767e42fcd37";
+const API_KEY = "b6884a2584190f6c6af49767e42fcd37";
 
 export default class App extends Component {
   //state 작성
   state = {
     isLoaded: false, //데이터API 불러오면 True로 바뀜
-    error: null
+    error: null,
+    temperature: null,
+    name: null
   } //정보를 받았는지, 안받았는지 알려주는 indicator
 
 
@@ -31,7 +33,7 @@ export default class App extends Component {
       error => {
         this.setState({
           error: 'something is wrong'
-        })  // 못받으면 에러..
+        });  // 못받으면 에러..
       }
     );
   }
@@ -39,17 +41,28 @@ export default class App extends Component {
   _getWeather= (lat, long) => {
     fetch('https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+long+'&APPID='+API_KEY)
     .then(response => response.json())
-    .then(json => {console.log(json);});
+    .then(json => {
+      //console.log(json);
+      
+      this.setState({
+        temperature : json.main.temp,
+        name :  json.weather[0].main,
+        isLoaded: true
+      });
+      console.log("1. json.weather[0].main : "  + json.weather[0].main);
+      console.log("7 name" + name);
+    });
   }
 
   //콘솔에서 위치 날짜
 
   render() {
-    const {isLoaded, error} = this.state; //isLoaded, error 2개 받음
+    const {isLoaded, error, temperature, name } = this.state; //isLoaded, error 2개 받음
+    console.log("2. name : " + name);
     return (
       <View style={styles.container}>
         <StatusBar hidden={true}/>
-        {isLoaded ? (<Weather />) : ( 
+        {isLoaded ? (<Weather weatherName= {name} temp={Math.ceil(temperature - 273.15)} />) : ( 
           <View style={styles.loading}> 
             <Text style={styles.loadingText}>Getting the fucking weather</Text>
             {error ? <Text style= {styles.errorText}>{error}</Text> : null}
