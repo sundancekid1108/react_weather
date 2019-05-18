@@ -2,10 +2,10 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import PropTypes from "prop-types";
-import {Ionicons} from "@expo/vector-icons" // expo에 있는 IconLibrary.. fontawesome도 찾아보자
-import App from "./App"
+// expo에 있는 IconLibrary.. fontawesome도 찾아보자
+
 
 const weatherCases = {
     Rain: {

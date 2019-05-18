@@ -50,7 +50,7 @@ _getWeather= (lat, long) => {
         isLoaded: true
       });
       console.log("1. json.weather[0].main : "  + json.weather[0].main);
-      console.log("1. name : " + name);
+      console.log("1. weather_name : " + weather_name);
       
     });
   }
@@ -60,12 +60,17 @@ _getWeather= (lat, long) => {
   //콘솔에서 위치 날짜
 
   render() {
-    const {isLoaded, error, temperature, name } = this.state; //isLoaded, error 2개 받음
-    console.log("2. name : " + name);
+    const {isLoaded, error, name, temperature } = this.state; //isLoaded, error 2개 받음
+    console.log("2. weather_name : " + name);
     return (
       <View style={styles.container}>
         <StatusBar hidden={true}/>
-        {isLoaded ? (<Weather weatherName= {name} temp={Math.ceil(temperature - 273.15)} />) : ( 
+        {isLoaded ? (
+          <Weather
+             weatherName= {name}
+            temp={Math.ceil(temperature - 273.15)}
+          />
+        ) : ( 
           <View style={styles.loading}> 
             <Text style={styles.loadingText}>Getting the fucking weather</Text>
             {error ? <Text style= {styles.errorText}>{error}</Text> : null}
